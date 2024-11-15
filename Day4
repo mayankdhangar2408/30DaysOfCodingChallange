@@ -1,0 +1,27 @@
+Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
+
+You must not use any built-in exponent function or operator.
+
+For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
+
+
+class Solution {
+    public int mySqrt(int x) {
+        if (x == 0) return 0; // Handle edge case for 0
+        
+        int left = 1, right = x; // Start with the range [1, x]
+        int result = 0; // Variable to store the answer
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2; // Avoid potential overflow
+            if ((long) mid * mid <= x) { // Use long to avoid overflow in multiplication
+                result = mid; // Update result because mid^2 <= x
+                left = mid + 1; // Narrow the range to [mid + 1, right]
+            } else {
+                right = mid - 1; // Narrow the range to [left, mid - 1]
+            }
+        }
+        
+        return result;
+    }
+}
